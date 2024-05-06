@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  serv1:
+    build: ./service1
+    ports:
+      - 3000:3000
+    environment:
+      - port=3000
+      - url_rabbit=amqp://guest:guest@rabbit:5672
+    depends_on:
+      - rabbit
+  serv2:
+    build: ./service2
+    ports:
+      - 3001:3000
+    environment:
+      - port=3000
+      - url_rabbit=amqp://guest:guest@rabbit:5672
+    depends_on:
+      - rabbit
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
